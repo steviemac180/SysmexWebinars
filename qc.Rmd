@@ -16,7 +16,7 @@ library(DT)
 library(lubridate)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-
+# read in data file
 qc <- read_csv('QC.csv')
 qc$Sample.No <- as.factor("Sample No.")
 datatable(qc)
