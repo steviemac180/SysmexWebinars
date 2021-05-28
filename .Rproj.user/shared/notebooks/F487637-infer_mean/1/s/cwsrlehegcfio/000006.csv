@@ -1,0 +1,9 @@
+"0","df_qc <- inference_data %>% 
+  select(Analyser,`Sample No.`, `PLT(10^9/L)`,`WBC(10^9/L)`) %>% 
+  filter(`Sample No.` == ""QC-10061101"", Analyser == XN2)
+"
+"2","Error: Problem with `filter()` input `..2`.
+[31mx[39m object 'XN2' not found
+[34mℹ[39m Input `..2` is `Analyser == XN2`.
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

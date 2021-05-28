@@ -1,0 +1,80 @@
+---
+title: "Quailty Control Demonstration"
+author: "Stephen"
+date: "11/05/2021"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+library(DT)
+library(reticulate)
+```
+
+## Generate some Fake data
+
+```{r qc_out}
+## randoml generate 100 points mean = 15, sd = 1
+level_1 <- round(rnorm(100,1.5,0.05),2)
+level_2 <- round(rnorm(100,4,0.2),2)
+level_3 <- round(rnorm(100,8,0.4),2)
+
+head(level_1)
+head(level_2)
+
+qc_data <- data.frame(cbind(level_1,level_2, level_3))  
+
+data_table <- DT::datatable(qc_data)
+data_table
+
+str(qc_data)
+
+
+
+qc_long <- qc_data %>% 
+  pivot_longer(1:3) 
+
+vline <- qc_long %>% group_by(name) %>% 
+  summarise(mean = mean(value))
+
+ 
+  qc_long %>%  ggplot(aes(value)) +
+    geom_histogram(color="lightblue",fill = "lightblue", bins = 10) +
+    facet_wrap(~name, scales = "free") +
+    geom_vline(data = vline, aes(xintercept = mean), colour="black") +
+    theme_light()
+  
+qc_data %>% 
+  ggplot(aes(level_1, level_2)) +
+  geom_point()
+
+qc_long %>% 
+  ggplot(aes(name, value)) +
+  geom_boxplot() +
+ 
+               coord_flip()
+
+
+
+# sd <- sd(qc_data)
+# mean(qc_data)
+# sd(qc_data)
+# 
+# hist(qc_data, breaks = 15)
+# abline(v=mean(qc_data)+(1.96*sd), col="red")
+# abline(v=mean(qc_data)-(1.96*sd), col="red")
+
+
+### Title
+```
+
+
+
+

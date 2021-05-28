@@ -1,0 +1,5 @@
+"0","visualize(null_distn) +"
+"0","  shade_p_value(obs_stat = x_bar, direction = ""two-sided"")"
+"2","Error in vapply(list(...), ggplot2::is.ggplot, logical(1)) : 
+  object 'x_bar' not found
+"

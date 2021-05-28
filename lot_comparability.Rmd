@@ -1,0 +1,16 @@
+---
+title: "Comparing Lot numbers - An analysis"
+output: html_notebook
+---
+
+# An analysis of lot to lot comparability
+
+```{r lod_libraries}
+library(tidyverse)
+library(broom)
+
+View(diamonds)
+
+plot(diamonds$carat, diamonds$price)
+```
+

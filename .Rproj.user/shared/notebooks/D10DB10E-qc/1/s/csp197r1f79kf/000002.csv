@@ -1,0 +1,3 @@
+"0","qc <- read_csv('QC.csv')"
+"0","qc$Sample.No <- as.factor(""Sample No."")"
+"0","datatable(qc)"

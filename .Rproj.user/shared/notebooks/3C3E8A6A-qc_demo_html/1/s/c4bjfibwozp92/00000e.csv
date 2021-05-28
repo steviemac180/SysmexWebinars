@@ -1,0 +1,8 @@
+"0","# sd <- sd(qc_data)"
+"0","# mean(qc_data)"
+"0","# sd(qc_data)"
+"0","# "
+"0","# hist(qc_data, breaks = 15)"
+"0","# abline(v=mean(qc_data)+(1.96*sd), col=""red"")"
+"0","# abline(v=mean(qc_data)-(1.96*sd), col=""red"")"
+"0","### Title"

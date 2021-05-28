@@ -1,0 +1,11 @@
+"0","inference_data %>% 
+  select(Analyser,`PLT(10^9/L)`,`WBC(10^9/L)`) %>% 
+  specify(response=`WBC(10^9/L)`) %>% 
+  calculate(stat=""mean"")
+"
+"1","[90m# A tibble: 1 x 1[39m
+   stat
+  [3m[90m<dbl>[39m[23m
+[90m1[39m  8.26"
+"1","
+"

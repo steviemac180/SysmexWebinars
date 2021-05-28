@@ -1,0 +1,68 @@
+---
+title: "QC Demo"
+author: "Stephen"
+date: "11/05/2021"
+output: ioslides_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Statistical Quality Control
+
+- We will try to explein concepts using some simulated data
+- We can then apply this to some real world data
+
+## Mean and SD simulation
+
+- Here we need to use sample as an example of ow the SD will change over time
+
+- There is an underlying - unknown standard deviation of the population
+- In the intial stages of setting up our QC we are merely sampling individual draws from that population
+- The SD we get is not going too represent the population SD until we sample a lot more samples
+
+## Exercise
+
+
+```{r}
+sd(rnorm(2e6, 15, 5))
+```
+
+
+```{r simulation}
+inputPanel(
+  selectInput("n_samples", label = "Number of samples:",
+              choices = c(10, 20, 50, 100, 200), selected = 20),
+    sliderInput("mean", label = "Target Mean:",
+              min = 10, max = 50, value = 20, step = 2),
+  sliderInput("sd", label = "Standard deviation:",
+              min = 1, max = 10, value = 2, step = 0.2)
+)
+
+renderPlot({
+  hist(rnorm(input$n_samples, input$mean, input$sd), breaks = 20,
+       xlab = "Result (Units)", main = "How does QC vary?")
+})
+```
+
+## Probability of controls going out
+
+```
+
+
+## Results
+
+- Even using quite conservative simulated data we can see that there are points that "seem" quite a bit off
+- This is part of the statistical process, 5% of results will be >2SD from the mean 
+- How does this effect our expected performance?
+
+## What do you do with data that is out?
+
+- Trim it.....
+- But is that the right thng to do?
+
+
+
+

@@ -1,0 +1,5 @@
+"0","qc_long %>% "
+"0","  group_by(Analyser, Parameter, qc) %>% "
+"0","  summarise(count = n(), mean = round(mean(Result),2), min = min(Result), max = max(Result), sd = round(sd(Result),2),"
+"0","            CV = sd/mean*100) %>% "
+"0","  datatable()"

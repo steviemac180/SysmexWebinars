@@ -1,0 +1,9 @@
+"0","mean_null_distn %>%
+  get_p_value(obs_stat = wbc_mean, direction = ""right"")
+"
+"1","[90m# A tibble: 1 x 1[39m
+  p_value
+    [3m[90m<dbl>[39m[23m
+[90m1[39m   0.315"
+"1","
+"

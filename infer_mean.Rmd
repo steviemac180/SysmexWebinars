@@ -1,0 +1,64 @@
+---
+title: "Inference"
+author: "Stephen"
+date: "26/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# QC data, mean for one parameter - is it different from the target?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+library(tidyverse)
+library(infer)
+library(broom)
+library(DT)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+inference_data <- read_csv("QC.csv")
+```
+
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+df_qc <- inference_data %>% 
+  select(Analyser,`Sample No.`, `PLT(10^9/L)`,`WBC(10^9/L)`) %>% 
+  filter(`Sample No.` == "QC-10061101", Analyser == "XN2")
+datatable(df_qc)
+
+```
+
+# What is the mean of the WBC for this control level and lot?
+```{r}
+wbc_mean <- df_qc %>% 
+  specify(response=`WBC(10^9/L)`) %>% 
+  calculate(stat="mean")
+```
+
+## The target i have set is 2.95, are we significantly different?
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+mean_null_distn <- df_qc %>%
+  specify(response=`WBC(10^9/L)`) %>%
+  hypothesize(null = "point", mu = 2.95) %>%
+  generate(reps = 1000) %>%
+  calculate(stat = "mean")
+```
+```{r message=FALSE, warning=FALSE, error=FALSE}
+visualize(mean_null_distn)
+```
+
+
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+visualize(mean_null_distn) +
+  shade_p_value(obs_stat = wbc_mean, direction = "right")
+```
+```{r message=FALSE, warning=FALSE, error=FALSE}
+mean_null_distn %>%
+  get_p_value(obs_stat = wbc_mean, direction = "right")
+```
+
+

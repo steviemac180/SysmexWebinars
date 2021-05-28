@@ -1,0 +1,56 @@
+---
+title: "QC_data"
+author: "Stephen"
+date: "23/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(DT)
+library(lubridate)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+qc <- read_csv('QC.csv')
+qc$Sample.No <- as.factor("Sample No.")
+datatable(qc)
+
+```
+
+<!-- ### Fidlle with the Date and Time columns so they make sense -->
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+qc$date_time = mdy_hms(paste(qc$Date, qc$Time))
+```
+## How many of each lot number have been run?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+qc_long <- qc %>% 
+  select(1:90) %>% 
+  pivot_longer(6:90, names_to = "Parameter", values_to = "Result") %>% 
+  rename(qc = "Sample No.")
+
+qc_long %>% count(qc, sort=TRUE  )
+```
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE} -->
+<!-- qc %>%  -->
+<!--   select(1:90) %>%  -->
+<!--   group_by(`Sample No.`) %>%  -->
+<!--   summary() -->
+<!-- ``` -->
+
+
+## What are the summary stats of each parameter
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+qc_long %>% 
+  group_by(Analyser, Parameter, qc) %>% 
+  summarise(count = n(), mean = round(mean(Result),2), min = min(Result), max = max(Result), sd = round(sd(Result),2),
+            CV = sd/mean*100) %>% 
+  datatable()
+```
+
